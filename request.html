@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><link rel="stylesheet" href="effects.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start a project - NexaCode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0E1116;--ink-soft:#171B22;--paper:#F5F4F0;--signal:#00C2A8;--muted:#9AA0AE;--line:#2A2F3A;--amber:#FFB454;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{min-height:100vh;background:radial-gradient(circle at 88% 7%,rgba(0,194,168,.18),transparent 27rem),radial-gradient(circle at 8% 85%,rgba(255,180,84,.08),transparent 24rem),var(--ink);color:var(--paper);font-family:Inter,sans-serif;line-height:1.5;padding:26px 0 70px}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:linear-gradient(rgba(237,235,227,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(237,235,227,.08) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+  a{color:inherit;text-decoration:none}
+  button,input,select,textarea{font:inherit}
+  :focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+  .page{width:min(1120px,calc(100% - 48px));margin:auto;position:relative}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:72px}
+  .logo{font:600 20px Fraunces,serif;display:flex;align-items:center;gap:8px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--signal);display:inline-block}
+  .back{color:var(--muted);font:500 12px 'IBM Plex Mono',monospace;border:1px solid var(--line);padding:9px 13px;border-radius:4px;transition:color .15s,border-color .15s}
+  .language-toggle{margin-inline-start:auto;margin-inline-end:10px;background:transparent;color:var(--paper);border:1px solid var(--line);border-radius:4px;padding:8px 11px;font:500 11px 'IBM Plex Mono',monospace;cursor:pointer}.language-toggle:hover{border-color:var(--signal);color:var(--signal)}
+  .page::before{content:'';position:absolute;z-index:-1;width:360px;height:360px;right:-130px;top:150px;border:1px solid rgba(0,194,168,.2);border-radius:50%;transform:rotateX(68deg) rotateZ(-18deg);box-shadow:0 0 0 28px rgba(0,194,168,.035),0 0 0 56px rgba(0,194,168,.02);pointer-events:none}
+  .intro::after{content:'';display:block;width:100%;height:92px;margin-top:35px;border-radius:6px;background:linear-gradient(90deg,rgba(14,17,22,.18),rgba(14,17,22,.02)),url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=78') center/cover;opacity:.72;box-shadow:12px 14px 0 rgba(0,0,0,.12);transform:perspective(800px) rotateX(3deg)}
+  .back:hover{color:var(--paper);border-color:var(--signal)}
+  .intro{max-width:720px;margin-bottom:46px}
+  .eyebrow{color:var(--signal);font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  h1{font:500 clamp(44px,7vw,78px)/1.02 Fraunces,serif;letter-spacing:-.02em;max-width:11ch}
+  .intro p{color:var(--muted);font-size:17px;max-width:51ch;margin-top:22px}
+  .layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:24px;align-items:start}
+  .form-panel{background:rgba(23,27,34,.76);border:1px solid rgba(237,235,227,.13);border-radius:8px;padding:32px;box-shadow:16px 20px 0 rgba(0,0,0,.12),0 28px 60px rgba(0,0,0,.2);backdrop-filter:blur(14px);transform:perspective(1200px) rotateY(-2deg);transform-origin:center right}
+  .form-heading{display:flex;justify-content:space-between;align-items:baseline;gap:18px;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:26px}
+  .form-heading h2{font:500 25px Fraunces,serif}
+  .required{font-size:12px;color:var(--muted)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 18px}
+  .field{display:flex;flex-direction:column;gap:8px}
+  .field.full{grid-column:1/-1}
+  label,.legend{font-size:13px;font-weight:500;color:var(--paper)}
+  label span,.legend span{color:var(--signal)}
+  input,select,textarea{width:100%;color:var(--paper);background:#10141B;border:1px solid var(--line);border-radius:4px;padding:12px 13px;outline:none;transition:border-color .15s,box-shadow .15s}
+  input::placeholder,textarea::placeholder{color:#646B7A}
+  input:focus,select:focus,textarea:focus{border-color:var(--signal);box-shadow:0 0 0 3px rgba(0,194,168,.1)}
+  select{appearance:auto}
+  textarea{min-height:132px;resize:vertical}
+  .choices{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .choice{position:relative}
+  .choice input{position:absolute;opacity:0;width:1px;height:1px}
+  .choice label{display:block;height:100%;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:11px 10px;font-size:13px;cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+  .choice label:hover,.choice input:checked+label{color:var(--paper);border-color:var(--signal);background:rgba(0,194,168,.08)}
+  .choice input:checked+label::after{content:'âœ“';float:right;color:var(--signal)}
+  .file{border:1px dashed #3A4250;padding:15px;border-radius:4px;color:var(--muted);font-size:13px}
+  .file input{border:0;padding:0;background:transparent;margin-top:9px;color:var(--muted)}
+  .submit-row{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
+  .privacy{color:var(--muted);font-size:12px;max-width:34ch}
+  .submit{border:0;border-radius:4px;background:var(--signal);color:#04211D;font-weight:600;padding:13px 22px;cursor:pointer;white-space:nowrap;transition:background .15s,transform .15s}
+  .submit:hover{background:#1FD8BE;transform:translateY(-2px)}
+  .side{padding:22px 4px 0 20px}
+  .side-block{border-top:1px solid var(--line);padding:19px 0 23px}
+  .side-block h3{font:500 20px Fraunces,serif;margin-bottom:8px}
+  .side-block p{color:var(--muted);font-size:14px}
+  .side-note{color:var(--amber);font:500 12px 'IBM Plex Mono',monospace;margin-top:18px}
+  .success{display:none;text-align:center;padding:52px 22px}
+  .success.visible{display:block}
+  .success h2{font:500 38px Fraunces,serif;margin-bottom:13px}
+  .success p{color:var(--muted);max-width:38ch;margin:0 auto 24px}
+  .success a{display:inline-block;color:var(--signal);border-bottom:1px solid var(--signal);padding-bottom:3px;font-size:14px}
+  .summary{max-width:500px;margin:28px auto;text-align:start;border:1px solid var(--line);border-radius:4px;background:#10141B;overflow:hidden}
+  .summary-row{display:flex;justify-content:space-between;gap:24px;padding:12px 15px;border-bottom:1px solid rgba(42,47,58,.7);font-size:13px}
+  .summary-row:last-child{border-bottom:0}
+  .summary-label{color:var(--muted)}
+  .summary-value{color:var(--paper);text-align:end;overflow-wrap:anywhere}
+  .request-number{margin:20px auto 0;color:var(--amber);font:500 13px 'IBM Plex Mono',monospace}
+  .copy-id{margin-inline-start:8px;background:transparent;color:var(--signal);border:1px solid var(--signal);border-radius:4px;padding:5px 9px;font-size:11px;cursor:pointer}
+  .tracking-link{margin-top:25px;margin-inline-start:18px}
+  [dir="rtl"] .form-panel{transform:perspective(1200px) rotateY(2deg);transform-origin:center left}
+  [dir="rtl"] .side{padding:22px 20px 0 4px}
+  @media(max-width:800px){.page{width:min(100% - 32px,620px)}.topbar{margin-bottom:52px}.layout{grid-template-columns:1fr}.side{padding:0 4px}.form-panel{transform:none!important}.side{display:grid;grid-template-columns:1fr 1fr;gap:20px}.side-note{grid-column:1/-1;margin-top:0}}
+  @media(max-width:560px){body{padding-top:18px}.page{width:calc(100% - 28px)}.topbar{margin-bottom:48px}.intro{margin-bottom:34px}h1{font-size:48px}.form-panel{padding:22px 18px}.form-grid{grid-template-columns:1fr;gap:18px}.field.full{grid-column:auto}.choices{grid-template-columns:1fr}.submit-row{align-items:stretch;flex-direction:column}.submit{width:100%}.side{display:block}.side-block{padding:17px 0}}
+  @media(prefers-reduced-motion:reduce){.submit{transition:none}.submit:hover{transform:none}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="topbar">
+    <a class="logo" href="index.html"><span class="dot"></span>NexaCode</a>
+    <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language to Arabic">Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</button>
+    <a class="back" href="index.html" data-en="Back to home" data-ar="Ø§Ù„Ø¹ÙˆØ¯Ø© Ù„Ù„Ø±Ø¦ÙŠØ³ÙŠØ©">Back to home</a>
+  </header>
+
+  <section class="intro">
+    <div class="eyebrow" data-en="Project intake / 01" data-ar="Ø§Ø³ØªÙ„Ø§Ù… Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ / 01">Project intake / 01</div>
+    <h1 data-en="Let's build something useful." data-ar="Ù„Ù†Ø¨Ù†Ù Ø´ÙŠØ¦Ù‹Ø§ Ù…ÙÙŠØ¯Ù‹Ø§.">Let's build something useful.</h1>
+    <p data-en="Tell us where you are now and where you want to go. We will come back with the clearest next step, not a sales pitch." data-ar="Ø£Ø®Ø¨Ø±Ù†Ø§ Ø£ÙŠÙ† Ø£Ù†Øª Ø§Ù„Ø¢Ù† ÙˆØ¥Ù„Ù‰ Ø£ÙŠÙ† ØªØ±ÙŠØ¯ Ø§Ù„ÙˆØµÙˆÙ„. Ø³Ù†Ø¹ÙˆØ¯ Ø¥Ù„ÙŠÙƒ Ø¨Ø§Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ© Ø§Ù„Ø£ÙˆØ¶Ø­ØŒ Ù„Ø§ Ø¨Ø¹Ø±Ø¶ Ù…Ø¨ÙŠØ¹Ø§Øª Ø·ÙˆÙŠÙ„.">Tell us where you are now and where you want to go. We will come back with the clearest next step, not a sales pitch.</p>
+  </section>
+
+  <div class="layout">
+    <section class="form-panel">
+      <div id="formContent">
+        <div class="form-heading"><h2 data-en="Project details" data-ar="ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹">Project details</h2><div class="required" data-en="* Required" data-ar="* Ù…Ø·Ù„ÙˆØ¨">* Required</div></div>
+        <form id="projectForm">
+          <div class="form-grid">
+            <div class="field"><label for="name" data-en="Your name *" data-ar="Ø§Ø³Ù…Ùƒ *">Your name <span>*</span></label><input id="name" name="name" type="text" autocomplete="name" placeholder="Jane Smith" required></div>
+            <div class="field"><label for="email" data-en="Work email *" data-ar="Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ Ù„Ù„Ø¹Ù…Ù„ *">Work email <span>*</span></label><input id="email" name="email" type="email" autocomplete="email" placeholder="jane@company.com" required></div>
+            <div class="field"><label for="phone" data-en="Phone number *" data-ar="Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ *">Phone number <span>*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 000 0000" data-placeholder-en="+1 555 000 0000" data-placeholder-ar="Ù…Ø«Ø§Ù„: 079 000 0000" required></div>
+            <div class="field"><label for="company" data-en="Company" data-ar="Ø§Ù„Ø´Ø±ÙƒØ©">Company</label><input id="company" name="company" type="text" autocomplete="organization" placeholder="Your company"></div>
+            <div class="field"><label for="website" data-en="Current website (optional)" data-ar="Ø§Ù„Ù…ÙˆÙ‚Ø¹ Ø§Ù„Ø­Ø§Ù„ÙŠ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)">Current website (optional)</label><input id="website" name="website" type="url" placeholder="Leave blank if you do not have one" data-placeholder-en="Leave blank if you do not have one" data-placeholder-ar="Ø§ØªØ±ÙƒÙ‡ ÙØ§Ø±ØºÙ‹Ø§ Ø¥Ø°Ø§ Ù„Ù… ÙŠÙƒÙ† Ù„Ø¯ÙŠÙƒ Ù…ÙˆÙ‚Ø¹"></div>
+            <div class="field full"><fieldset style="border:0"><legend class="legend" data-en="What do you need? *" data-ar="Ù…Ø§Ø°Ø§ ØªØ­ØªØ§Ø¬ØŸ *">What do you need? <span>*</span></legend><div class="choices" style="margin-top:8px"><div class="choice"><input id="marketing" name="service" type="checkbox" value="marketing"><label for="marketing" data-en="Marketing site" data-ar="Ù…ÙˆÙ‚Ø¹ ØªØ³ÙˆÙŠÙ‚ÙŠ">Marketing site</label></div><div class="choice"><input id="application" name="service" type="checkbox" value="application"><label for="application" data-en="Web application" data-ar="ØªØ·Ø¨ÙŠÙ‚ ÙˆÙŠØ¨">Web application</label></div><div class="choice"><input id="care" name="service" type="checkbox" value="care"><label for="care" data-en="Ongoing care" data-ar="Ø±Ø¹Ø§ÙŠØ© Ù…Ø³ØªÙ…Ø±Ø©">Ongoing care</label></div></div></fieldset></div>
+            <div class="field"><label for="budget" data-en="Estimated budget" data-ar="Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ù…ØªÙˆÙ‚Ø¹Ø©">Estimated budget</label><input id="budget" name="budget" type="text" placeholder="Write your budget, if you have one" data-placeholder-en="Write your budget, if you have one" data-placeholder-ar="Ø§ÙƒØªØ¨ Ù…ÙŠØ²Ø§Ù†ÙŠØªÙƒ Ø¥Ø°Ø§ ÙƒØ§Ù†Øª Ù„Ø¯ÙŠÙƒ"></div>
+            <div class="field"><label for="timeline" data-en="Ideal timeline" data-ar="Ø§Ù„Ù…Ø¯Ø© Ø§Ù„Ù…Ù†Ø§Ø³Ø¨Ø©">Ideal timeline</label><input id="timeline" name="timeline" type="text" placeholder="For example: 2 months, or no fixed deadline" data-placeholder-en="For example: 2 months, or no fixed deadline" data-placeholder-ar="Ù…Ø«Ø§Ù„: Ø´Ù‡Ø±Ø§Ù†ØŒ Ø£Ùˆ Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ù…ÙˆØ¹Ø¯ Ù…Ø­Ø¯Ø¯"></div>
+            <div class="field full"><label for="brief" data-en="Tell us about the project *" data-ar="Ø£Ø®Ø¨Ø±Ù†Ø§ Ø¹Ù† Ø§Ù„Ù…Ø´Ø±ÙˆØ¹ *">Tell us about the project <span>*</span></label><textarea id="brief" name="brief" placeholder="What are you hoping to build, improve, or solve?" required></textarea></div>
+            <div class="field full file"><label for="attachment" data-en="Add a brief, files, or images (optional)" data-ar="Ø£Ø¶Ù Ù…Ù„ÙÙ‹Ø§ Ù…ÙˆØ¬Ø²Ù‹Ø§ Ø£Ùˆ Ù…Ù„ÙØ§Øª Ø£Ùˆ ØµÙˆØ±Ù‹Ø§ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)">Add a brief, files, or images (optional)</label><input id="attachment" name="attachment" type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp" multiple></div>
+          </div>
+          <div class="submit-row"><p class="privacy" data-en="We only use your details to reply to this enquiry." data-ar="Ù†Ø³ØªØ®Ø¯Ù… Ø¨ÙŠØ§Ù†Ø§ØªÙƒ ÙÙ‚Ø· Ù„Ù„Ø±Ø¯ Ø¹Ù„Ù‰ Ù‡Ø°Ø§ Ø§Ù„Ø·Ù„Ø¨.">We only use your details to reply to this enquiry.</p><button class="submit" type="submit" data-en="Send project enquiry" data-ar="Ø¥Ø±Ø³Ø§Ù„ Ø·Ù„Ø¨ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹">Send project enquiry</button></div>
+        </form>
+      </div>
+      <div class="success" id="success" aria-live="polite"><h2 data-en="Message received." data-ar="ØªÙ… Ø§Ø³ØªÙ„Ø§Ù… Ø±Ø³Ø§Ù„ØªÙƒ.">Message received.</h2><p data-en="Thank you. Here is a copy of the information you sent us." data-ar="Ø´ÙƒØ±Ù‹Ø§ Ù„Ùƒ. Ù‡Ø°Ù‡ Ù†Ø³Ø®Ø© Ù…Ù† Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„ØªÙŠ Ø£Ø±Ø³Ù„ØªÙ‡Ø§ Ø¥Ù„ÙŠÙ†Ø§.">Thank you. Here is a copy of the information you sent us.</p><div class="request-number"><span data-en="Save your request number:" data-ar="Ø§Ø­ØªÙØ¸ Ø¨Ø±Ù‚Ù… Ø·Ù„Ø¨Ùƒ:">Save your request number:</span> <strong id="requestId"></strong><button class="copy-id" id="copyId" type="button" data-en="Copy" data-ar="Ù†Ø³Ø®">Copy</button></div><div class="summary" id="summary"></div><a href="index.html" data-en="Return to home" data-ar="Ø§Ù„Ø¹ÙˆØ¯Ø© Ù„Ù„Ø±Ø¦ÙŠØ³ÙŠØ©">Return to home</a><a class="tracking-link" href="tracking.html" data-en="Track your request" data-ar="ØªØªØ¨Ø¹ Ø·Ù„Ø¨Ùƒ">Track your request</a></div>
+    </section>
+
+    <aside class="side">
+      <div class="side-block"><h3 data-en="A good first step" data-ar="Ø®Ø·ÙˆØ© Ø£ÙˆÙ„Ù‰ Ø¬ÙŠØ¯Ø©">A good first step</h3><p data-en="You do not need a finished brief. A rough idea, a problem, or a page you dislike is enough to start." data-ar="Ù„Ø§ ØªØ­ØªØ§Ø¬ Ø¥Ù„Ù‰ Ù…ÙˆØ¬Ø² Ù…ÙƒØªÙ…Ù„. ØªÙƒÙÙŠ ÙÙƒØ±Ø© Ø£ÙˆÙ„ÙŠØ© Ø£Ùˆ Ù…Ø´ÙƒÙ„Ø© Ø£Ùˆ ØµÙØ­Ø© Ù„Ø§ ØªØ¹Ø¬Ø¨Ùƒ Ù„Ù„Ø¨Ø¯Ø¡.">You do not need a finished brief. A rough idea, a problem, or a page you dislike is enough to start.</p></div>
+      <div class="side-block"><h3 data-en="What happens next" data-ar="Ù…Ø§Ø°Ø§ ÙŠØ­Ø¯Ø« Ø¨Ø¹Ø¯ Ø°Ù„Ùƒ">What happens next</h3><p data-en="We read your enquiry, ask only the useful questions, then suggest a focused path forward." data-ar="Ù†Ù‚Ø±Ø£ Ø·Ù„Ø¨Ùƒ ÙˆÙ†Ø·Ø±Ø­ Ø§Ù„Ø£Ø³Ø¦Ù„Ø© Ø§Ù„Ù…ÙÙŠØ¯Ø© ÙÙ‚Ø·ØŒ Ø«Ù… Ù†Ù‚ØªØ±Ø­ Ù…Ø³Ø§Ø±Ù‹Ø§ ÙˆØ§Ø¶Ø­Ù‹Ø§ Ù„Ù„Ù…Ø¶ÙŠ Ù‚Ø¯Ù…Ù‹Ø§.">We read your enquiry, ask only the useful questions, then suggest a focused path forward.</p></div>
+      <div class="side-note" data-en="Typical reply: within 2 business days" data-ar="Ø§Ù„Ø±Ø¯ Ø§Ù„Ù…Ø¹ØªØ§Ø¯: Ø®Ù„Ø§Ù„ ÙŠÙˆÙ…ÙŠ Ø¹Ù…Ù„">Typical reply: within 2 business days</div>
+    </aside>
+  </div>
+</main>
+<script>
+  const savedLanguage = localStorage.getItem('nexacode-language') === 'ar' ? 'ar' : 'en';
+  const form = document.getElementById('projectForm');
+  function setLanguage(language) {
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-en][data-ar]').forEach((element) => { element.textContent = element.dataset[language]; });
+    document.querySelectorAll('input, textarea').forEach((element) => { element.dir = language === 'ar' ? 'rtl' : 'ltr'; });
+    document.querySelectorAll('[data-placeholder-en][data-placeholder-ar]').forEach((element) => { element.placeholder = element.dataset['placeholder' + (language === 'ar' ? 'Ar' : 'En')]; });
+    document.querySelector('#brief').placeholder = language === 'ar' ? 'Ù…Ø§ Ø§Ù„Ø°ÙŠ ØªØ±ÙŠØ¯ Ø¨Ù†Ø§Ø¡Ù‡ Ø£Ùˆ ØªØ­Ø³ÙŠÙ†Ù‡ Ø£Ùˆ Ø­Ù„Ù‡ØŸ' : 'What are you hoping to build, improve, or solve?';
+    document.title = language === 'ar' ? 'Ø§Ø¨Ø¯Ø£ Ù…Ø´Ø±ÙˆØ¹Ù‹Ø§ - NexaCode' : 'Start a project - NexaCode';
+    document.getElementById('languageToggle').textContent = language === 'ar' ? 'English' : 'Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©';
+    document.getElementById('languageToggle').setAttribute('aria-label', language === 'ar' ? 'Switch language to English' : 'Switch language to Arabic');
+  }
+  setLanguage(savedLanguage);
+  document.getElementById('languageToggle').addEventListener('click', () => { localStorage.setItem('nexacode-language', document.documentElement.lang === 'ar' ? 'en' : 'ar'); location.reload(); });
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[character]));
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const services = [...form.querySelectorAll('input[name="service"]:checked')].map((input) => input.nextElementSibling.textContent.trim()).join(', ') || (document.documentElement.lang === 'ar' ? 'Ù„Ù… ÙŠØªÙ… ØªØ­Ø¯ÙŠØ¯ Ø®Ø¯Ù…Ø©' : 'No service selected');
+    const request = {
+      id: `NX-${Date.now().toString().slice(-6)}`,
+      date: new Date().toLocaleString(document.documentElement.lang === 'ar' ? 'ar' : 'en-US'),
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      company: formData.get('company') || (document.documentElement.lang === 'ar' ? 'ØºÙŠØ± Ù…Ø°ÙƒÙˆØ±Ø©' : 'Not provided'),
+      website: formData.get('website') || (document.documentElement.lang === 'ar' ? 'Ù„Ø§ ÙŠÙˆØ¬Ø¯' : 'None'),
+      services,
+      budget: formData.get('budget') || (document.documentElement.lang === 'ar' ? 'ØºÙŠØ± Ù…Ø°ÙƒÙˆØ±Ø©' : 'Not provided'),
+      timeline: formData.get('timeline') || (document.documentElement.lang === 'ar' ? 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯Ø©' : 'Not specified'),
+      brief: formData.get('brief'),
+      files: [...document.getElementById('attachment').files].map((file) => file.name).join(', ') || (document.documentElement.lang === 'ar' ? 'Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ø±ÙÙ‚Ø§Øª' : 'No attachments')
+    };
+    const requests = JSON.parse(localStorage.getItem('nexacode-requests') || '[]');
+    requests.unshift(request);
+    localStorage.setItem('nexacode-requests', JSON.stringify(requests));
+    const labels = document.documentElement.lang === 'ar' ? {id:'Ø±Ù‚Ù… Ø§Ù„Ø·Ù„Ø¨',date:'Ø§Ù„ØªØ§Ø±ÙŠØ®',name:'Ø§Ù„Ø§Ø³Ù…',email:'Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ',phone:'Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ',company:'Ø§Ù„Ø´Ø±ÙƒØ©',website:'Ø§Ù„Ù…ÙˆÙ‚Ø¹',services:'Ø§Ù„Ø®Ø¯Ù…Ø§Øª',budget:'Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©',timeline:'Ø§Ù„Ù…Ø¯Ø©',brief:'Ø§Ù„ØªÙØ§ØµÙŠÙ„',files:'Ø§Ù„Ù…Ø±ÙÙ‚Ø§Øª'} : {id:'Request ID',date:'Date',name:'Name',email:'Email',phone:'Phone',company:'Company',website:'Website',services:'Services',budget:'Budget',timeline:'Timeline',brief:'Brief',files:'Attachments'};
+    document.getElementById('summary').innerHTML = Object.entries(labels).map(([key, label]) => `<div class="summary-row"><span class="summary-label">${label}</span><span class="summary-value">${escapeHtml(request[key])}</span></div>`).join('');
+    document.getElementById('requestId').textContent = request.id;
+    document.getElementById('copyId').onclick = async () => { await navigator.clipboard.writeText(request.id); document.getElementById('copyId').textContent = document.documentElement.lang === 'ar' ? 'ØªÙ… Ø§Ù„Ù†Ø³Ø®' : 'Copied'; };
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('success').classList.add('visible');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+</body>
+</html>

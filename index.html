@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexaCode — Websites built like software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1116;
+    --ink-soft:#171B22;
+    --paper:#F5F4F0;
+    --paper-soft:#ECEAE4;
+    --text-on-ink:#EDEBE3;
+    --text-on-ink-dim:#9AA0AE;
+    --text-on-paper:#14161F;
+    --muted:#767C8C;
+    --line-on-paper:#DEDBD2;
+    --line-on-ink:#2A2F3A;
+    --signal:#00C2A8;
+    --signal-dim:#0A5B51;
+    --amber:#FFB454;
+    --violet:#8B90D9;
+    --radius:4px;
+    --maxw:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--text-on-paper);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  :focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  code, .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(14,17,22,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-on-ink);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:68px;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:20px;
+    color:var(--text-on-ink);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--signal);
+    display:inline-block;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:36px;
+  }
+  .nav-links a{
+    color:var(--text-on-ink-dim);
+    font-size:14.5px;
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--text-on-ink); }
+  .nav-cta{
+    display:inline-block;
+    background:var(--signal);
+    color:#04211D;
+    padding:9px 18px;
+    border-radius:var(--radius);
+    font-size:14.5px;
+    font-weight:500;
+    border:none;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .nav-cta:hover{ background:#1FD8BE; }
+  .nav-track{
+    display:inline-block;
+    color:var(--text-on-ink);
+    padding:8px 12px;
+    border:1px solid var(--line-on-ink);
+    border-radius:var(--radius);
+    font-size:13px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .nav-track:hover{ border-color:var(--signal); background:var(--ink-soft); }
+  .lang-toggle{
+    background:transparent;
+    color:var(--text-on-ink);
+    padding:8px 12px;
+    border:1px solid var(--line-on-ink);
+    border-radius:var(--radius);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .lang-toggle:hover{ border-color:var(--signal); background:var(--ink-soft); }
+  .nav-toggle{ display:none; }
+
+  /* ---------- 3D STUDIO LAYER ---------- */
+  body{
+    background:
+      radial-gradient(circle at 78% 8%, rgba(0,194,168,.09), transparent 24rem),
+      var(--paper);
+  }
+  .hero{
+    position:relative;
+    isolation:isolate;
+    background:
+      radial-gradient(circle at 78% 42%, rgba(0,194,168,.14), transparent 28rem),
+      linear-gradient(135deg,#0E1116 0%,#121923 52%,#0B3B39 150%);
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    opacity:.2;
+    background-image:linear-gradient(rgba(237,235,227,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(237,235,227,.08) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:linear-gradient(to bottom,black,transparent 80%);
+  }
+  .hero-grid{ position:relative; }
+  .hero-visual{
+    position:relative;
+    perspective:1100px;
+    transform-style:preserve-3d;
+    min-height:370px;
+  }
+  .hero-visual::before,
+  .hero-visual::after{
+    content:'';
+    position:absolute;
+    pointer-events:none;
+    border:1px solid rgba(0,194,168,.32);
+    border-radius:50%;
+    transform-style:preserve-3d;
+  }
+  .hero-visual::before{
+    width:390px;
+    height:150px;
+    top:78px;
+    left:50%;
+    transform:translateX(-50%) rotateX(67deg) rotateZ(-16deg) translateZ(-70px);
+    box-shadow:0 0 44px rgba(0,194,168,.12), inset 0 0 25px rgba(0,194,168,.08);
+  }
+  .hero-visual::after{
+    width:270px;
+    height:270px;
+    top:22px;
+    left:50%;
+    transform:translateX(-50%) rotateY(66deg) rotateX(15deg) translateZ(-100px);
+    border-color:rgba(255,180,84,.22);
+  }
+  .hero-visual .editor,
+  .hero-visual .preview{
+    position:relative;
+    z-index:1;
+    transform-style:preserve-3d;
+    transition:transform .18s ease-out, box-shadow .25s ease;
+  }
+  .hero-visual .editor{
+    transform:rotateY(-8deg) rotateX(4deg) translateZ(26px);
+    box-shadow:24px 34px 0 rgba(0,0,0,.16),0 30px 70px -30px rgba(0,0,0,.8);
+  }
+  .hero-visual .preview{
+    transform:rotateY(7deg) rotateX(-3deg) translate(26px,-5px) translateZ(8px);
+  }
+  .hero-visual:hover .editor{ box-shadow:30px 38px 0 rgba(0,0,0,.14),0 34px 78px -28px rgba(0,0,0,.85); }
+  .hero h1{ text-shadow:0 2px 30px rgba(0,194,168,.12); }
+  html[dir="rtl"] .testimonial{ text-align:right; }
+  html[dir="rtl"] .service-row .tag{ text-align:left; }
+  .work-grid{ perspective:1400px; }
+  .work-tile{ transform-style:preserve-3d; transition:transform .3s ease,box-shadow .3s ease; box-shadow:0 12px 0 rgba(14,17,22,.06); }
+  .work-tile:hover{ transform:translateY(-8px) rotateX(2deg) rotateY(-2deg); box-shadow:12px 22px 0 rgba(14,17,22,.08),0 24px 32px rgba(14,17,22,.12); }
+  .service-row{ transition:padding .2s ease,background .2s ease; }
+  .service-row:hover{ padding-left:14px; padding-right:14px; background:rgba(0,194,168,.045); }
+  .process{ position:relative; overflow:hidden; }
+  .process::after{
+    content:'';
+    position:absolute;
+    width:420px;
+    height:420px;
+    right:-150px;
+    top:50%;
+    border:1px solid rgba(139,144,217,.24);
+    border-radius:50%;
+    transform:translateY(-50%) rotateX(65deg);
+    box-shadow:0 0 0 28px rgba(139,144,217,.035),0 0 0 56px rgba(139,144,217,.025);
+    pointer-events:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-visual .editor,.hero-visual .preview,.work-tile,.service-row{ transition:none; }
+    .work-tile:hover{ transform:none; }
+  }
+  @media (max-width:900px){
+    .hero-visual{ min-height:310px; }
+    .hero-visual::before{ width:300px; height:120px; top:58px; }
+    .hero-visual::after{ width:210px; height:210px; top:14px; }
+    .hero-visual .editor{ transform:rotateY(-5deg) rotateX(2deg) translateZ(18px); }
+    .hero-visual .preview{ transform:rotateY(4deg) translate(12px,-4px); }
+    .service-row:hover{ padding-left:0; padding-right:0; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    padding:96px 0 88px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:64px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5vw, 60px);
+    line-height:1.06;
+    color:var(--text-on-ink);
+    max-width:15ch;
+  }
+  .hero p.lede{
+    margin-top:24px;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--text-on-ink-dim);
+    max-width:42ch;
+  }
+  .hero-actions{
+    margin-top:36px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn-primary{
+    display:inline-block;
+    text-align:center;
+    background:var(--signal);
+    color:#04211D;
+    padding:13px 24px;
+    border-radius:var(--radius);
+    font-weight:500;
+    font-size:15px;
+    border:none;
+    cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .btn-primary:hover{ background:#1FD8BE; transform:translateY(-1px); }
+  .btn-ghost{
+    padding:13px 24px;
+    border-radius:var(--radius);
+    font-weight:500;
+    font-size:15px;
+    border:1px solid var(--line-on-ink);
+    color:var(--text-on-ink);
+    background:transparent;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-ghost:hover{ border-color:#4A5262; background:var(--ink-soft); }
+
+  /* editor mockup */
+  .editor{
+    background:#12151C;
+    border:1px solid var(--line-on-ink);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,0.6);
+  }
+  .editor-bar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:11px 14px;
+    border-bottom:1px solid var(--line-on-ink);
+    background:#0F1218;
+  }
+  .editor-bar span{
+    width:9px;height:9px;border-radius:50%;
+    background:#3A3F4B;
+  }
+  .editor-bar .fname{
+    margin-left:10px;
+    font-size:12px;
+    color:var(--text-on-ink-dim);
+  }
+  .editor-body{
+    padding:20px 22px;
+    font-size:13px;
+    line-height:1.9;
+    min-height:150px;
+  }
+  .editor-body .l{
+    white-space:pre;
+    opacity:0;
+    animation:reveal .01s forwards;
+  }
+  .kw{color:var(--violet);}
+  .fn{color:#7AA2F7;}
+  .str{color:var(--amber);}
+  .tag{color:var(--signal);}
+  .cmt{color:#565D6B;}
+
+  .preview{
+    margin-top:14px;
+    background:var(--paper);
+    border-radius:8px;
+    border:1px solid var(--line-on-ink);
+    overflow:hidden;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,0.6);
+  }
+  .preview-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 12px;
+    background:var(--paper-soft);
+    border-bottom:1px solid var(--line-on-paper);
+  }
+  .preview-bar .url{
+    flex:1;
+    background:#fff;
+    border:1px solid var(--line-on-paper);
+    border-radius:4px;
+    font-size:11px;
+    padding:4px 10px;
+    color:var(--muted);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .preview-body{
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .pv-block{
+    background:var(--paper-soft);
+    border-radius:4px;
+    opacity:0;
+    transform:translateY(6px);
+    animation:blockIn .5s ease forwards;
+  }
+  .pv-nav{ height:14px; width:40%; }
+  .pv-hero{ height:46px; }
+  .pv-row{ display:flex; gap:10px; }
+  .pv-card{ height:36px; flex:1; }
+
+  @keyframes reveal{ to{ opacity:1; } }
+  @keyframes blockIn{ to{ opacity:1; transform:translateY(0);} }
+
+  .l1{animation-delay:.2s;} .l2{animation-delay:.5s;} .l3{animation-delay:.8s;}
+  .l4{animation-delay:1.05s;} .l5{animation-delay:1.3s;} .l6{animation-delay:1.5s;}
+  .l7{animation-delay:1.7s;}
+  .pv-nav{animation-delay:1.9s;}
+  .pv-hero{animation-delay:2.15s;}
+  .pv-c1{animation-delay:2.4s;} .pv-c2{animation-delay:2.55s;} .pv-c3{animation-delay:2.7s;}
+
+  @media (prefers-reduced-motion: reduce){
+    .editor-body .l, .pv-block{ animation:none !important; opacity:1 !important; transform:none !important; }
+  }
+
+  /* ---------- CLIENT STRIP ---------- */
+  .clients{
+    padding:44px 0;
+    border-bottom:1px solid var(--line-on-paper);
+  }
+  .clients .label{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:22px;
+  }
+  .clients-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:36px 44px;
+    align-items:center;
+  }
+  .clients-row span{
+    font-family:'Fraunces',serif;
+    font-size:17px;
+    color:#B7B2A5;
+    font-weight:500;
+  }
+  .featured-gallery{
+    padding-top:8px;
+    padding-bottom:30px;
+  }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr;
+    gap:24px;
+  }
+  .gallery-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    border:1px solid var(--line-on-paper);
+    background:var(--paper-soft);
+    min-height:320px;
+    box-shadow:0 18px 36px rgba(14,17,22,0.06);
+  }
+  .gallery-card img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .35s ease;
+  }
+  .gallery-card:hover img{ transform:scale(1.05); }
+  .gallery-card .caption{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:16px;
+    background:rgba(14,17,22,.72);
+    color:var(--text-on-ink);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(4px);
+    border-radius:12px;
+    padding:12px 14px;
+  }
+  .gallery-card .caption small{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    opacity:.8;
+    margin-bottom:5px;
+  }
+  .gallery-card .caption strong{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+  }
+  .hero-proof{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px;color:var(--text-on-ink-dim);font:500 11px 'IBM Plex Mono',monospace}.hero-proof span{border:1px solid var(--line-on-ink);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.025)}
+  .stats-band{background:var(--ink);color:var(--text-on-ink);padding:34px 0;border-top:1px solid var(--line-on-ink);border-bottom:1px solid var(--line-on-ink)}.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}.metric{padding:6px 24px;border-left:1px solid var(--line-on-ink)}.metric:first-child{border-left:0;padding-left:0}.metric strong{display:block;color:var(--signal);font:500 clamp(28px,4vw,42px) Fraunces,serif}.metric span{color:var(--text-on-ink-dim);font-size:13px}
+  @media(max-width:700px){.stats-grid{grid-template-columns:1fr 1fr;gap:18px}.metric{border-left:0;padding:0}.metric:nth-child(odd){border-right:1px solid var(--line-on-ink)}}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding:100px 0; }
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:48px;
+    margin-bottom:56px;
+    align-items:end;
+  }
+  .section-head h2{
+    font-size:clamp(28px,3.4vw,38px);
+    line-height:1.15;
+    max-width:14ch;
+  }
+  .section-head p{
+    color:var(--muted);
+    font-size:16.5px;
+    max-width:44ch;
+  }
+
+  /* ---------- SERVICES (divided list) ---------- */
+  .service-row{
+    display:grid;
+    grid-template-columns:280px 1fr 200px;
+    gap:32px;
+    padding:34px 0;
+    border-top:1px solid var(--line-on-paper);
+    align-items:start;
+  }
+  .service-row:last-child{ border-bottom:1px solid var(--line-on-paper); }
+  .service-row h3{
+    font-size:23px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .service-row h3::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--signal);
+    display:inline-block;
+  }
+  .service-row h3::before{content:'01';font:500 11px 'IBM Plex Mono',monospace;color:var(--signal);width:22px;height:22px;border:1px solid var(--signal);border-radius:50%;display:grid;place-items:center}.service-row:nth-child(2) h3::before{content:'02';color:var(--violet);border-color:var(--violet)}.service-row:nth-child(3) h3::before{content:'03';color:var(--amber);border-color:var(--amber)}
+  .service-row p{
+    color:var(--muted);
+    font-size:15.5px;
+    max-width:52ch;
+  }
+  .service-row .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    justify-self:end;
+    text-align:right;
+  }
+
+  /* ---------- PROCESS ---------- */
+  .process{
+    background:var(--ink);
+    color:var(--text-on-ink);
+  }
+  .process .section-head h2, .process .section-head p{ color:inherit; }
+  .process .section-head p{ color:var(--text-on-ink-dim); }
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    position:relative;
+  }
+  .step{
+    padding:0 28px 0 0;
+    border-left:1px solid var(--line-on-ink);
+    padding-left:28px;
+  }
+  .step:first-child{ border-left:none; padding-left:0; }
+  .step .num{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--signal);
+    font-size:14px;
+    margin-bottom:18px;
+    display:block;
+  }
+  .step h3{
+    font-size:20px;
+    margin-bottom:12px;
+    color:var(--text-on-ink);
+  }
+  .step p{
+    font-size:14.5px;
+    color:var(--text-on-ink-dim);
+  }
+
+  /* ---------- WORK ---------- */
+  .work-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    grid-template-rows:auto auto;
+    gap:24px;
+  }
+  .work-tools{display:flex;justify-content:flex-end;gap:8px;margin:-30px 0 28px;flex-wrap:wrap}
+  .work-filter{background:transparent;border:1px solid var(--line-on-paper);color:var(--muted);border-radius:var(--radius);padding:8px 12px;font-size:13px;cursor:pointer}
+  .work-filter.active,.work-filter:hover{background:var(--ink);border-color:var(--ink);color:var(--text-on-ink)}
+  .work-tile{
+    background:var(--paper-soft);
+    border:1px solid var(--line-on-paper);
+    border-radius:var(--radius);
+    overflow:hidden;
+    position:relative;
+    text-decoration:none;
+  }
+  .work-tile::before{content:'View case study  ↗';position:absolute;z-index:3;top:14px;right:14px;background:rgba(14,17,22,.78);color:var(--text-on-ink);padding:7px 9px;border-radius:3px;font:500 10px 'IBM Plex Mono',monospace;opacity:0;transform:translateY(-5px);transition:opacity .2s,transform .2s}.work-tile:hover::before{opacity:1;transform:translateY(0)}
+  .work-tile.large{ grid-row:span 2; }
+  .work-thumb{
+    height:220px;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    padding:18px;
+    overflow:hidden;
+  }
+  .work-thumb img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:saturate(.82) contrast(1.04);
+    transition:transform .35s ease;
+  }
+  .work-tile:hover .work-thumb img{ transform:scale(1.04); }
+  .work-thumb::after{
+    content:'';
+    position:absolute;
+    inset:35% 0 0;
+    background:linear-gradient(transparent,rgba(14,17,22,.82));
+  }
+  .work-tile.large .work-thumb{ height:340px; }
+  .thumb-a{ background:linear-gradient(135deg,#123B36,#0E1116); }
+  .thumb-b{ background:linear-gradient(135deg,#2B2A45,#0E1116); }
+  .thumb-c{ background:linear-gradient(135deg,#3A2A1E,#0E1116); }
+  .thumb-mark{
+    font-family:'Fraunces',serif;
+    color:var(--text-on-ink);
+    font-size:22px;
+    position:relative;
+    z-index:1;
+  }
+  .work-info{
+    padding:20px 22px 24px;
+    border-top:1px solid var(--line-on-paper);
+  }
+  .work-info .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--signal-dim);
+    margin-bottom:8px;
+  }
+  .work-info h3{ font-size:19px; margin-bottom:8px; }
+  .work-info p{ color:var(--muted); font-size:14.5px; }
+
+  /* ---------- TESTIMONIAL ---------- */
+  .testimonial{
+    text-align:left;
+  }
+  .testimonial blockquote{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(24px,3vw,34px);
+    line-height:1.45;
+    max-width:26ch;
+    color:var(--text-on-paper);
+  }
+  .testimonial .attrib{
+    margin-top:28px;
+    font-size:14.5px;
+    color:var(--muted);
+  }
+  .testimonial .attrib strong{ color:var(--text-on-paper); font-weight:600; }
+  .reviews-section{ background:var(--paper-soft); border-top:1px solid var(--line-on-paper); }
+  .reviews-layout{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+  .review-list{ display:grid; gap:18px; }
+  .review-card{ background:var(--paper); border:1px solid var(--line-on-paper); border-radius:var(--radius); padding:22px; }
+  .review-card blockquote{ font-family:'Fraunces',serif; font-size:20px; line-height:1.45; }
+  .review-card .stars{ color:#B77718; letter-spacing:2px; margin-bottom:10px; }
+  .review-card .review-author{ color:var(--muted); font-size:13px; margin-top:15px; }
+  .review-summary{color:var(--muted);font-size:14px;margin-top:-38px;margin-bottom:28px}.review-summary strong{color:#B77718;font-size:18px;letter-spacing:2px}
+  .review-form{ background:var(--ink); color:var(--text-on-ink); padding:28px; border-radius:var(--radius); }
+  .review-form h3{ font-size:25px; margin-bottom:8px; }
+  .review-form > p{ color:var(--text-on-ink-dim); font-size:14px; margin-bottom:22px; }
+  .review-fields{ display:grid; gap:14px; }
+  .review-fields label{ color:var(--text-on-ink); font-size:13px; }
+  .review-fields input,.review-fields textarea{ width:100%; margin-top:6px; background:#10141B; border:1px solid var(--line-on-ink); border-radius:var(--radius); color:var(--text-on-ink); padding:11px 12px; font:inherit; }
+  .review-fields textarea{ min-height:105px; resize:vertical; }
+  .rating{ display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:4px; margin-top:6px; }
+  .rating input{ position:absolute; opacity:0; width:1px; }
+  .rating label{ color:#56606C; cursor:pointer; font-size:25px; line-height:1; margin:0; }
+  .rating label:hover,.rating label:hover~label,.rating input:checked~label{ color:var(--amber); }
+  .review-message{ color:var(--signal); font-size:13px; margin-top:14px; }
+  .faq-section{border-top:1px solid var(--line-on-paper)}.faq-list{max-width:820px;margin:auto}.faq-item{border-top:1px solid var(--line-on-paper)}.faq-item:last-child{border-bottom:1px solid var(--line-on-paper)}.faq-item summary{cursor:pointer;padding:20px 0;font:500 20px Fraunces,serif}.faq-item p{color:var(--muted);max-width:65ch;padding:0 0 20px;font-size:15px}
+  .contact-quick{display:inline-flex;align-items:center;gap:8px;margin-top:18px;color:var(--signal);font-size:14px}
+  @media(max-width:900px){ .reviews-layout{ grid-template-columns:1fr; gap:30px; } }
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    padding:88px 0;
+  }
+  .cta-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:32px;
+    flex-wrap:wrap;
+  }
+  .cta-inner h2{
+    font-size:clamp(28px,3.6vw,40px);
+    max-width:16ch;
+    color:var(--text-on-ink);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink);
+    color:var(--text-on-ink-dim);
+    border-top:1px solid var(--line-on-ink);
+    padding:48px 0 40px;
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-links{
+    display:flex;
+    gap:28px;
+  }
+  .footer-links a:hover{ color:var(--text-on-ink); }
+  .footer-bottom{
+    margin-top:32px;
+    padding-top:24px;
+    border-top:1px solid var(--line-on-ink);
+    font-size:13px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero{ padding:56px 0 64px; }
+    .section-head{ grid-template-columns:1fr; }
+    .service-row{ grid-template-columns:1fr; gap:10px; }
+    .service-row .tag{ justify-self:start; text-align:left; }
+    .steps{ grid-template-columns:1fr 1fr; row-gap:36px; }
+    .step{ border-left:none; padding-left:0; }
+    .work-grid{ grid-template-columns:1fr; }
+    .work-tile.large{ grid-row:auto; }
+    .nav-links{ display:none; }
+    .lang-toggle{ margin-left:auto; margin-right:12px; }
+    section{ padding:64px 0; }
+    .cta-inner{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="dot"></span>NexaCode</div>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="lang-toggle" type="button" aria-label="Switch language to Arabic">العربية</button>
+    <a class="nav-track" href="tracking.html">Track a request</a>
+    <a class="nav-cta" href="request.html">Start a project</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>We build websites like we build software.</h1>
+      <p class="lede">NexaCode designs and develops custom websites for growing businesses — tested, fast, and maintainable from the first commit to every update after launch.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="request.html">Start a project</a>
+        <a class="btn-ghost" href="#work">See our work</a>
+      </div>
+      <div class="hero-proof"><span>Fast by default</span><span>Built to last</span><span>Human support</span></div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="editor">
+        <div class="editor-bar">
+          <span></span><span></span><span></span>
+          <span class="fname">homepage.tsx</span>
+        </div>
+        <div class="editor-body mono">
+          <div class="l l1"><span class="cmt">// nexacode.com</span></div>
+          <div class="l l2"><span class="kw">export function</span> <span class="fn">Homepage</span>() {</div>
+          <div class="l l3">&nbsp;&nbsp;<span class="kw">return</span> (</div>
+          <div class="l l4">&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">Hero</span> cta=<span class="str">"Start a project"</span> /&gt;</div>
+          <div class="l l5">&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">Services</span> items={3} /&gt;</div>
+          <div class="l l6">&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tag">Work</span> projects={featured} /&gt;</div>
+          <div class="l l7">&nbsp;&nbsp;);</div>
+        </div>
+      </div>
+
+      <div class="preview">
+        <div class="preview-bar">
+          <span style="width:8px;height:8px;border-radius:50%;background:#D8D5CB;display:inline-block;"></span>
+          <div class="url">nexacode.com</div>
+        </div>
+        <div class="preview-body">
+          <div class="pv-block pv-nav"></div>
+          <div class="pv-block pv-hero"></div>
+          <div class="pv-row">
+            <div class="pv-block pv-card pv-c1"></div>
+            <div class="pv-block pv-card pv-c2"></div>
+            <div class="pv-block pv-card pv-c3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-band" aria-label="Studio results">
+  <div class="wrap stats-grid">
+    <div class="metric"><strong>0.9s</strong><span>Typical page load</span></div>
+    <div class="metric"><strong>3x</strong><span>More product views</span></div>
+    <div class="metric"><strong>6-10</strong><span>Days to launch</span></div>
+    <div class="metric"><strong>100%</strong><span>Human-led delivery</span></div>
+  </div>
+</section>
+
+<section class="clients">
+  <div class="wrap">
+    <div class="label">Trusted by teams at</div>
+    <div class="clients-row">
+      <span>Marlowe &amp; Finch</span>
+      <span>Rowan Freight</span>
+      <span>Hearth Goods Co.</span>
+      <span>Cedarline</span>
+      <span>Portico Health</span>
+      <span>Fieldnote</span>
+    </div>
+  </div>
+</section>
+
+<section class="featured-gallery">
+  <div class="wrap">
+    <div class="gallery-grid">
+      <article class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80" alt="Modern workspace with product design boards">
+        <div class="caption">
+          <small>Brand vision</small>
+          <strong>Creative direction</strong>
+        </div>
+      </article>
+      <article class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Business team collaborating around a table">
+        <div class="caption">
+          <small>Strategy</small>
+          <strong>Digital growth</strong>
+        </div>
+      </article>
+      <article class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Professionals reviewing website plans on a laptop">
+        <div class="caption">
+          <small>Launch</small>
+          <strong>Clear conversion</strong>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What we build</h2>
+      <p>Three kinds of projects, depending on what your business actually needs online.</p>
+    </div>
+
+    <div class="service-rows">
+      <div class="service-row">
+        <h3>Marketing sites</h3>
+        <p>For businesses that need a strong first impression — fast-loading pages, clear messaging, and a design that holds up next to competitors twice your size.</p>
+        <div class="tag">HTML · CMS · SEO</div>
+      </div>
+      <div class="service-row">
+        <h3>Web applications</h3>
+        <p>For products with logins, dashboards, and real data behind them. Built on a codebase your team can extend without calling us back for every change.</p>
+        <div class="tag">React · APIs · Auth</div>
+      </div>
+      <div class="service-row">
+        <h3>Ongoing care</h3>
+        <p>For sites that need to keep working — monitoring, security patches, content updates, and a person to call when something breaks.</p>
+        <div class="tag">Support · Uptime</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>How a project runs</h2>
+      <p>Four stages, roughly six to ten days depending on scope. You'll know what's happening at each one.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="num mono">01</span>
+        <h3>Discovery</h3>
+        <p>We learn your business, your customers, and what the site actually needs to do for you.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">02</span>
+        <h3>Design</h3>
+        <p>We design pages around how your customers think and browse, not a generic template.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">03</span>
+        <h3>Build</h3>
+        <p>We write clean, tested code — the same standard we'd hold for any production software.</p>
+      </div>
+      <div class="step">
+        <span class="num mono">04</span>
+        <h3>Launch &amp; support</h3>
+        <p>We ship it, watch how it performs, and stay on to fix and extend it as you grow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <p>A few of the sites we've shipped recently, across different kinds of businesses.</p>
+    </div>
+    <div class="work-tools" aria-label="Filter work">
+      <button class="work-filter active" type="button" data-filter="all">All</button>
+      <button class="work-filter" type="button" data-filter="marketing">Marketing</button>
+      <button class="work-filter" type="button" data-filter="application">Applications</button>
+    </div>
+
+    <div class="work-grid">
+      <a class="work-tile large" data-work-type="marketing" href="hearth-goods.html">
+        <div class="work-thumb thumb-a">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Modern living room furniture">
+          <span class="thumb-mark">Hearth Goods Co.</span>
+        </div>
+        <div class="work-info">
+          <div class="kicker">Marketing site + storefront</div>
+          <h3>A furniture brand's new online showroom</h3>
+          <p>Rebuilt from a slow template site to a custom-coded storefront. Page load dropped from 4.1s to 0.9s.</p>
+        </div>
+      </a>
+      <a class="work-tile" data-work-type="application" href="portico-health.html">
+        <div class="work-thumb thumb-b">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Healthcare professional using a tablet">
+          <span class="thumb-mark">Portico Health</span>
+        </div>
+        <div class="work-info">
+          <div class="kicker">Web application</div>
+          <h3>Patient scheduling dashboard</h3>
+          <p>A booking system built to replace three spreadsheets and a shared inbox.</p>
+        </div>
+      </a>
+      <a class="work-tile" data-work-type="marketing" href="cedarline.html">
+        <div class="work-thumb thumb-c">
+          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Cargo containers at a logistics terminal">
+          <span class="thumb-mark">Cedarline</span>
+        </div>
+        <div class="work-info">
+          <div class="kicker">Marketing site</div>
+          <h3>A logistics company's first real website</h3>
+          <p>Their first site beyond a single contact page — built to actually generate leads.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="wrap">
+    <blockquote>"NexaCode was the first team that asked what our customers actually needed before opening a design tool."</blockquote>
+    <div class="attrib"><strong>Dana Whitfield</strong> — Operations Lead, Hearth Goods Co.</div>
+  </div>
+</section>
+
+<section class="reviews-section" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 data-en="What clients say" data-ar="آراء العملاء">What clients say</h2>
+      <p data-en="Only clients with a real request can submit a review. New reviews appear after approval." data-ar="يمكن للعملاء الذين لديهم طلب حقيقي فقط إرسال رأي. تظهر الآراء الجديدة بعد الموافقة عليها.">Only clients with a real request can submit a review. New reviews appear after approval.</p>
+    </div>
+    <div class="review-summary" id="reviewSummary"></div>
+    <div class="reviews-layout">
+      <div class="review-list" id="reviewList"></div>
+      <form class="review-form" id="reviewForm">
+        <h3 data-en="Share your experience" data-ar="شارك تجربتك">Share your experience</h3>
+        <p data-en="Use the request number and email connected to your project." data-ar="استخدم رقم الطلب والبريد الإلكتروني المرتبط بمشروعك.">Use the request number and email connected to your project.</p>
+        <div class="review-fields">
+          <label for="reviewRequestId" data-en="Request number" data-ar="رقم الطلب">Request number<input id="reviewRequestId" type="text" placeholder="NX-123456" required></label>
+          <label for="reviewEmail" data-en="Your email" data-ar="بريدك الإلكتروني">Your email<input id="reviewEmail" type="email" placeholder="you@example.com" required></label>
+          <label data-en="Your rating" data-ar="تقييمك">Your rating<div class="rating"><input id="star5" name="rating" type="radio" value="5" required><label for="star5">★</label><input id="star4" name="rating" type="radio" value="4"><label for="star4">★</label><input id="star3" name="rating" type="radio" value="3"><label for="star3">★</label><input id="star2" name="rating" type="radio" value="2"><label for="star2">★</label><input id="star1" name="rating" type="radio" value="1"><label for="star1">★</label></div></label>
+          <label for="reviewText" data-en="Your review" data-ar="رأيك">Your review<textarea id="reviewText" placeholder="Tell us about your experience..." required></textarea></label>
+          <button class="btn-primary" type="submit" data-en="Submit review" data-ar="إرسال الرأي">Submit review</button>
+        </div>
+        <div class="review-message" id="reviewMessage" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="section-head"><h2 data-en="Frequently asked" data-ar="أسئلة شائعة">Frequently asked</h2><p data-en="A few useful answers before we start working together." data-ar="بعض الإجابات المفيدة قبل أن نبدأ العمل معًا.">A few useful answers before we start working together.</p></div>
+    <div class="faq-list">
+      <details class="faq-item"><summary data-en="How long does a typical project take?" data-ar="كم يستغرق المشروع عادةً؟">How long does a typical project take?</summary><p data-en="Most projects take six to ten days, depending on scope and feedback speed." data-ar="تستغرق معظم المشاريع من ستة إلى عشرة أيام، حسب النطاق وسرعة الملاحظات.">Most projects take six to ten days, depending on scope and feedback speed.</p></details>
+      <details class="faq-item"><summary data-en="Can you work with an existing website?" data-ar="هل يمكنكم العمل على موقع موجود؟">Can you work with an existing website?</summary><p data-en="Yes. We can improve, rebuild, or gradually replace an existing site without losing useful content." data-ar="نعم. يمكننا تحسين الموقع الحالي أو إعادة بنائه أو استبداله تدريجيًا دون فقدان المحتوى المفيد.">Yes. We can improve, rebuild, or gradually replace an existing site without losing useful content.</p></details>
+      <details class="faq-item"><summary data-en="What happens after I submit a request?" data-ar="ماذا يحدث بعد إرسال الطلب؟">What happens after I submit a request?</summary><p data-en="We review the details, reply within two business days, and suggest the clearest next step." data-ar="نراجع التفاصيل ونرد خلال يومي عمل ونقترح الخطوة التالية الأوضح.">We review the details, reply within two business days, and suggest the clearest next step.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="contact">
+  <div class="wrap cta-inner">
+    <h2>Have a project in mind?</h2>
+    <div><a class="btn-primary" href="request.html">Start a project</a>
+      <a class="contact-quick" href="kabdelfattah604@gmail.com">kabdelfattah604@gmail.com</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <div class="logo"><span class="dot"></span>NexaCode</div>
+      <div class="footer-links">
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#reviews" data-en="Reviews" data-ar="الآراء">Reviews</a>
+        <a href="#faq" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NexaCode. All rights reserved.</span>
+      <span class="mono">Built by NexaCode, obviously.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const languageToggle = document.querySelector('.lang-toggle');
+  const savedLanguage = localStorage.getItem('nexacode-language');
+  const translations = {
+    'We build websites like we build software.':'نبني المواقع كما نبني البرمجيات.',
+    'NexaCode designs and develops custom websites for growing businesses — tested, fast, and maintainable from the first commit to every update after launch.':'تصمم NexaCode وتطوّر مواقع مخصصة للشركات النامية، مختبرة وسريعة وسهلة الصيانة من أول سطر برمجي وحتى كل تحديث بعد الإطلاق.',
+    'Start a project':'ابدأ مشروعًا',
+    'Track a request':'تتبع طلبًا',
+    'See our work':'شاهد أعمالنا',
+    'Work':'الأعمال',
+    'Process':'المنهجية',
+    'Contact':'تواصل معنا',
+    'Trusted by teams at':'موثوق به من فرق في',
+    'What we build':'ما نبنيه',
+    'Three kinds of projects, depending on what your business actually needs online.':'ثلاثة أنواع من المشاريع، حسب ما يحتاجه عملك فعلًا على الإنترنت.',
+    'Marketing sites':'مواقع تسويقية',
+    'Marketing site':'موقع تسويقي',
+    'For businesses that need a strong first impression — fast-loading pages, clear messaging, and a design that holds up next to competitors twice your size.':'للشركات التي تحتاج إلى انطباع أول قوي، وصفحات سريعة التحميل، ورسائل واضحة، وتصميم ينافس شركات أكبر بمرتين.',
+    'Web applications':'تطبيقات ويب',
+    'For products with logins, dashboards, and real data behind them. Built on a codebase your team can extend without calling us back for every change.':'للمنتجات التي تحتوي على تسجيل دخول ولوحات تحكم وبيانات حقيقية، مبنية على قاعدة برمجية يستطيع فريقك تطويرها دون الحاجة إلينا عند كل تعديل.',
+    'Ongoing care':'رعاية مستمرة',
+    'For sites that need to keep working — monitoring, security patches, content updates, and a person to call when something breaks.':'للمواقع التي يجب أن تواصل العمل بكفاءة، مع المراقبة وتحديثات الأمان وتحديث المحتوى وشخص تتواصل معه عند حدوث أي خلل.',
+    'How a project runs':'كيف يسير المشروع',
+    "Four stages, roughly six to ten days depending on scope. You'll know what's happening at each one.":'أربع مراحل تستغرق تقريبًا من ستة إلى عشرة أيام حسب نطاق المشروع، وستعرف ما يحدث في كل مرحلة.',
+    'Discovery':'الاستكشاف',
+    'We learn your business, your customers, and what the site actually needs to do for you.':'نتعرف على عملك وعملائك وما يجب أن يفعله الموقع فعلًا من أجلك.',
+    'Design':'التصميم',
+    'We design pages around how your customers think and browse, not a generic template.':'نصمم الصفحات وفق طريقة تفكير عملائك وتصفحهم، وليس وفق قالب عام.',
+    'Build':'التطوير',
+    "We write clean, tested code — the same standard we'd hold for any production software.":'نكتب شيفرة نظيفة ومختبرة، بالمعيار نفسه الذي نلتزم به في أي برنامج جاهز للإنتاج.',
+    'Launch & support':'الإطلاق والدعم',
+    'We ship it, watch how it performs, and stay on to fix and extend it as you grow.':'نطلق الموقع ونراقب أداءه ونواصل دعمك لإصلاحه وتطويره مع نمو عملك.',
+    'Selected work':'أعمال مختارة',
+    "A few of the sites we've shipped recently, across different kinds of businesses.":'بعض المواقع التي أطلقناها مؤخرًا لشركات من مجالات مختلفة.',
+    'Marketing site + storefront':'موقع تسويقي ومتجر إلكتروني',
+    "A furniture brand's new online showroom":'صالة عرض إلكترونية جديدة لعلامة أثاث',
+    'Rebuilt from a slow template site to a custom-coded storefront. Page load dropped from 4.1s to 0.9s.':'أعدنا بناء الموقع من قالب بطيء إلى متجر مخصص البرمجة، فانخفض وقت تحميل الصفحة من 4.1 إلى 0.9 ثانية.',
+    'Web application':'تطبيق ويب',
+    'Patient scheduling dashboard':'لوحة جدولة مواعيد المرضى',
+    'A booking system built to replace three spreadsheets and a shared inbox.':'نظام حجوزات صُمم ليحل محل ثلاثة جداول بيانات وبريد وارد مشترك.',
+    'A logistics company\'s first real website':'أول موقع حقيقي لشركة لوجستية',
+    'Their first site beyond a single contact page — built to actually generate leads.':'أول موقع لهم يتجاوز صفحة تواصل واحدة، وصُمم لتوليد العملاء المحتملين فعليًا.',
+    'NexaCode was the first team that asked what our customers actually needed before opening a design tool.':'كانت NexaCode أول فريق يسأل عما يحتاجه عملاؤنا فعلًا قبل فتح أداة التصميم.',
+    '"NexaCode was the first team that asked what our customers actually needed before opening a design tool."':'"كانت NexaCode أول فريق يسأل عما يحتاجه عملاؤنا فعلًا قبل فتح أداة التصميم."',
+    'Dana Whitfield':'دانا ويتفيلد',
+    '— Operations Lead, Hearth Goods Co.':'— قائدة العمليات، Hearth Goods Co.',
+    'Have a project in mind?':'لديك مشروع في ذهنك؟',
+    '© 2026 NexaCode. All rights reserved.':'© 2026 NexaCode. جميع الحقوق محفوظة.',
+    'Built by NexaCode, obviously.':'بُني بواسطة NexaCode، بالتأكيد.'
+    ,'What clients say':'آراء العملاء'
+    ,'Only clients with a real request can submit a review. New reviews appear after approval.':'يمكن للعملاء الذين لديهم طلب حقيقي فقط إرسال رأي. تظهر الآراء الجديدة بعد الموافقة عليها.'
+    ,'Share your experience':'شارك تجربتك'
+    ,'Use the request number and email connected to your project.':'استخدم رقم الطلب والبريد الإلكتروني المرتبط بمشروعك.'
+    ,'Request number':'رقم الطلب'
+    ,'Your email':'بريدك الإلكتروني'
+    ,'Your rating':'تقييمك'
+    ,'Your review':'رأيك'
+    ,'Submit review':'إرسال الرأي'
+    ,'Fast by default':'سريع افتراضيًا'
+    ,'Built to last':'مصمم ليدوم'
+    ,'Human support':'دعم بشري'
+    ,'Typical page load':'زمن تحميل معتاد'
+    ,'More product views':'مشاهدات أكثر للمنتجات'
+    ,'Days to launch':'أيام حتى الإطلاق'
+    ,'Human-led delivery':'تنفيذ بإشراف بشري'
+  };
+  const englishToArabic = new Map(Object.entries(translations));
+  const arabicToEnglish = new Map(Object.entries(translations).map(([english, arabic]) => [arabic, english]));
+
+  function translatePage(language) {
+    const dictionary = language === 'ar' ? englishToArabic : arabicToEnglish;
+    document.querySelectorAll('[data-en][data-ar]').forEach((element) => {
+      if (!element.children.length) { element.textContent = element.dataset[language]; return; }
+      const directText = [...element.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.nodeValue.trim());
+      if (directText) directText.nodeValue = element.dataset[language];
+    });
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let textNode;
+    while (textNode = walker.nextNode()) {
+      if (textNode.parentElement.closest('script, style, .editor')) continue;
+      const text = textNode.nodeValue.trim();
+      if (dictionary.has(text)) textNode.nodeValue = textNode.nodeValue.replace(text, dictionary.get(text));
+    }
+    const imageAlt = language === 'ar' ? [
+      'أثاث غرفة معيشة عصرية',
+      'مختص رعاية صحية يستخدم جهازًا لوحيًا',
+      'حاويات شحن في محطة لوجستية'
+    ] : [
+      'Modern living room furniture',
+      'Healthcare professional using a tablet',
+      'Cargo containers at a logistics terminal'
+    ];
+    document.querySelectorAll('.work-thumb img').forEach((image, index) => { image.alt = imageAlt[index]; });
+    document.title = language === 'ar' ? 'ابدأ مشروعًا - NexaCode' : 'Start a project - NexaCode';
+  }
+
+  function setLanguage(language) {
+    const isArabic = language === 'ar';
+    translatePage(language);
+    document.documentElement.lang = language;
+    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+    languageToggle.textContent = isArabic ? 'English' : 'العربية';
+    languageToggle.setAttribute('aria-label', isArabic ? 'Switch language to English' : 'Switch language to Arabic');
+    localStorage.setItem('nexacode-language', language);
+    renderReviews();
+    renderReviewSummary();
+  }
+
+  document.querySelectorAll('.work-filter').forEach((filter) => filter.addEventListener('click', () => {
+    document.querySelectorAll('.work-filter').forEach((button) => button.classList.toggle('active', button === filter));
+    document.querySelectorAll('[data-work-type]').forEach((work) => { work.style.display = filter.dataset.filter === 'all' || work.dataset.workType === filter.dataset.filter ? '' : 'none'; });
+  }));
+
+  function renderReviewSummary() {
+    const reviews = JSON.parse(localStorage.getItem('nexacode-reviews') || '[]').filter((review) => review.status === 'approved');
+    const total = reviews.reduce((sum, review) => sum + Number(review.rating), 0);
+    const average = reviews.length ? (total / reviews.length).toFixed(1) : '0.0';
+    document.getElementById('reviewSummary').innerHTML = reviews.length ? `<strong>${average} ★</strong> / ${reviews.length} ${document.documentElement.lang === 'ar' ? 'تقييمات معتمدة' : 'approved reviews'}` : '';
+  }
+
+  function renderReviews() {
+    const reviews = JSON.parse(localStorage.getItem('nexacode-reviews') || '[]').filter((review) => review.status === 'approved');
+    document.getElementById('reviewList').innerHTML = reviews.length ? reviews.map((review) => `<article class="review-card"><div class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div><blockquote>“${escapeReview(review.text)}”</blockquote><div class="review-author">${escapeReview(review.name)} / ${escapeReview(review.requestId)}</div></article>`).join('') : `<p style="color:var(--muted);font-size:14px">${document.documentElement.lang === 'ar' ? 'ستظهر الآراء المعتمدة هنا.' : 'Approved reviews will appear here.'}</p>`;
+  }
+  function escapeReview(value) { return String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[character])); }
+  document.getElementById('reviewForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const requestId = document.getElementById('reviewRequestId').value.trim().toLowerCase();
+    const email = document.getElementById('reviewEmail').value.trim().toLowerCase();
+    const request = JSON.parse(localStorage.getItem('nexacode-requests') || '[]').find((item) => item.id.toLowerCase() === requestId && item.email.toLowerCase() === email);
+    const message = document.getElementById('reviewMessage');
+    if (!request) { message.textContent = document.documentElement.lang === 'ar' ? 'يجب أن تكون لديك طلبات مسجلة باستخدام نفس البريد.' : 'You need a submitted request using the same email.'; return; }
+    const reviews = JSON.parse(localStorage.getItem('nexacode-reviews') || '[]');
+    if (reviews.some((review) => String(review.requestId).toLowerCase() === request.id.toLowerCase())) { message.textContent = document.documentElement.lang === 'ar' ? 'تم إرسال رأي لهذا الطلب مسبقًا.' : 'A review was already submitted for this request.'; return; }
+    reviews.push({id:`RV-${Date.now().toString().slice(-6)}`,requestId:request.id,name:request.name,email:request.email,rating:Number(document.querySelector('input[name="rating"]:checked').value),text:document.getElementById('reviewText').value.trim(),status:'pending',date:new Date().toLocaleString()});
+    localStorage.setItem('nexacode-reviews', JSON.stringify(reviews));
+    message.textContent = document.documentElement.lang === 'ar' ? 'شكرًا! رأيك بانتظار موافقة الأدمن.' : 'Thank you! Your review is waiting for admin approval.';
+    event.target.reset();
+  });
+
+  const heroVisual = document.querySelector('.hero-visual');
+  if (heroVisual && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVisual.addEventListener('pointermove', (event) => {
+      const bounds = heroVisual.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      const editor = heroVisual.querySelector('.editor');
+      const preview = heroVisual.querySelector('.preview');
+      editor.style.transform = `rotateY(${-8 - x * 7}deg) rotateX(${4 - y * 5}deg) translateZ(26px)`;
+      preview.style.transform = `rotateY(${7 + x * 6}deg) rotateX(${-3 + y * 4}deg) translate(${26 + x * 12}px,${-5 + y * 8}px) translateZ(8px)`;
+    });
+    heroVisual.addEventListener('pointerleave', () => {
+      heroVisual.querySelector('.editor').style.transform = '';
+      heroVisual.querySelector('.preview').style.transform = '';
+    });
+  }
+
+  setLanguage(savedLanguage === 'ar' ? 'ar' : 'en');
+  renderReviewSummary();
+  languageToggle.addEventListener('click', () => {
+    setLanguage(document.documentElement.lang === 'ar' ? 'en' : 'ar');
+  });
+</script>
+
+</body>
+</html>
